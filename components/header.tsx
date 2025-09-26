@@ -1,7 +1,6 @@
 // components/header.tsx
 import * as React from 'react'
 import Link from 'next/link'
-import { cookies } from 'next/headers'
 
 import { auth } from '@/auth'
 import { clearChats } from '@/app/actions'
@@ -14,10 +13,10 @@ import { ThemeToggle } from '@/components/theme-toggle'
 import { ClearHistory } from '@/components/clear-history'
 import { UserMenu } from '@/components/user-menu'
 
-// ВАЖНО: без 'use client' — это серверный компонент
+// ВАЖНО: без 'use client' — серверный компонент
 export async function Header() {
-  // Передаем cookieStore в auth()
-  const session = await auth({ cookieStore: cookies() })
+  // NextAuth сам читает cookies внутри auth()
+  const session = await auth()
   const userId = session?.user?.id as string | undefined
 
   return (
