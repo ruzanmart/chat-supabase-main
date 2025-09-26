@@ -13,10 +13,9 @@ import { ThemeToggle } from '@/components/theme-toggle'
 import { ClearHistory } from '@/components/clear-history'
 import { UserMenu } from '@/components/user-menu'
 
-// ВАЖНО: без 'use client' — серверный компонент
+// серверный компонент (без 'use client')
 export async function Header() {
-  // NextAuth сам читает cookies внутри auth()
-  const session = await auth()
+  const session = await auth() // без параметров
   const userId = session?.user?.id as string | undefined
 
   return (

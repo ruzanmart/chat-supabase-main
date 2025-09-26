@@ -1,17 +1,16 @@
-import 'server-only'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+// auth.ts
 import { cookies } from 'next/headers'
 
-export const auth = async ({
-  cookieStore
-}: {
-  cookieStore: ReturnType<typeof cookies>
-}) => {
-  // Create a Supabase client configured to use cookies
-  const supabase = createServerComponentClient({
-    cookies: () => cookieStore
-  })
-  const { data, error } = await supabase.auth.getSession()
-  if (error) throw error
-  return data.session
+// cookieStore делаем опциональным, чтобы вызов auth() без аргументов не падал
+export const auth = async (
+  opts: { cookieStore?: ReturnType<typeof cookies> } = {}
+) => {
+  const cookieStore = opts.cookieStore ?? cookies()
+
+  // TODO: здесь позже подключим реальную авторизацию (GitHub/Supabase/и т.д.)
+  // Временно возвращаем "пустую" сессию, чтобы приложение не падало.
+  return { user: null } as any
 }
+
+export type Session = Awaited<ReturnType<typeof auth>>
+
