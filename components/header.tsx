@@ -15,7 +15,7 @@ import { UserMenu } from '@/components/user-menu'
 
 // серверный компонент (без 'use client')
 export async function Header() {
-  const session = await auth() // без параметров
+  const session = await auth() // заглушка вернёт { user: null }
   const userId = session?.user?.id as string | undefined
 
   return (
@@ -24,11 +24,7 @@ export async function Header() {
         {session?.user ? (
           <Sidebar>
             <React.Suspense fallback={<div className="flex-1 overflow-auto" />}>
-              {userId ? (
-                <SidebarList userId={userId} />
-              ) : (
-                <div className="p-3 text-sm text-muted-foreground">Loading…</div>
-              )}
+              {userId ? <SidebarList userId={userId} /> : <div className="p-3 text-sm text-muted-foreground">Loading…</div>}
             </React.Suspense>
             <SidebarFooter>
               <ThemeToggle />
